@@ -17,7 +17,7 @@ This project builds a demand prediction module for a street-vendor setup using h
 - **Three integration modes:**
   - ✔ Python script
   - ✔ Web Dashboard (Streamlit)
-  - ✔ REST API (FastAPI)
+  - ✔ REST API (Flask)
 
 ---
 
@@ -122,12 +122,16 @@ All data ends before **December 31, 2025**
 ### 1. Raw Data Generation
 ```bash
 python Raw_Data/generate_data.py
+or 
+python3 Raw_Data/generate_data.py
 ```
 Creates: `fruit_sales_raw.csv` and `vegetable_sales_raw.csv`
 
 ### 2. Cleaning & Preprocessing
 ```bash
 python Data_preprocessing/data_preprocessing.py
+or 
+python3 Data_preprocessing/data_preprocessing.py
 ```
 **Tasks:**
 - Parse and validate dates
@@ -142,6 +146,8 @@ python Data_preprocessing/data_preprocessing.py
 ### 3. Feature Preparation
 ```bash
 python Data_preprocessing/prepare_features.py
+or 
+python3 Data_preprocessing/prepare_features.py
 ```
 **Steps:**
 - One-hot encode: item, weather, season
@@ -153,6 +159,8 @@ python Data_preprocessing/prepare_features.py
 ### 4. EDA & Visualization
 ```bash
 python Data_preprocessing/eda.py
+or 
+python3 Data_preprocessinf/eda.py
 ```
 Or explore interactively: `Data_preprocessing/visualize.ipynb`
 
@@ -209,6 +217,8 @@ All models use chronological 80/20 train-test splits.
 ### Python Script Mode
 ```bash
 python model/predict_next_7_days.py
+or 
+python3 model/predict_next_7_days.py
 ```
 
 **Process:**
@@ -246,11 +256,13 @@ streamlit run dashboard.py
 
 ---
 
-## 🌐 REST API (FastAPI)
+## 🌐 REST API (Flask)
 
 ### Launch API
 ```bash
-uvicorn demand_api:app --reload
+python demand_api.py 
+or
+python3 demand_api.py
 ```
 
 ### API Endpoints
@@ -292,7 +304,7 @@ These files can be uploaded to the Streamlit dashboard or API.
 - **ML:** Scikit-learn, Statsmodels (ARIMA)
 - **Visualization:** Matplotlib, Seaborn
 - **Web Dashboard:** Streamlit
-- **API:** FastAPI
+- **REST API:** Flask
 - **Model Persistence:** Joblib
 
 ---
@@ -322,6 +334,8 @@ pip install -r requirements.txt
 ### 2. Run Full Pipeline
 ```bash
 python run_all.py
+or
+python3 run_all.py
 ```
 This executes: data generation → cleaning → feature engineering → model training → 7-day forecasting
 
@@ -337,7 +351,9 @@ streamlit run dashboard.py
 
 ### 5. Launch REST API
 ```bash
-uvicorn demand_api:app --reload
+python demand_api.py
+or
+python3 demand_api.py
 ```
 
 ---
