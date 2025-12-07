@@ -326,35 +326,91 @@ These files can be uploaded to the Streamlit dashboard or API.
 
 ## ▶️ Quick Start
 
-### 1. Install Dependencies
+### 1. Clone the Repository
+```bash
+git clone <repository-url>
+cd VEGETBLE_DEMAND_FORECASTING
+```
+
+### 2. Create Virtual Environment
+```bash
+# Create virtual environment
+python -m venv venv
+# OR
+python3 -m venv venv
+```
+
+### 3. Activate Virtual Environment
+
+**On Windows:**
+```bash
+venv\Scripts\activate
+```
+
+**On macOS/Linux:**
+```bash
+source venv/bin/activate
+```
+
+### 4. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Run Full Pipeline
+### 5. Run Full Pipeline
 ```bash
 python run_all.py
-or
+# OR
 python3 run_all.py
 ```
 This executes: data generation → cleaning → feature engineering → model training → 7-day forecasting
 
-### 3. View Predictions
+---
+
+## 📈 View Predictions - Three Ways
+
+After running the pipeline, you can view predictions using **any of these three methods:**
+
+### **Method 1: Python Script (Direct File Access)**
+View the generated prediction files directly:
 ```bash
+# List prediction files
 ls 7_days_prediction/
+
+# View fruit predictions
+cat 7_days_prediction/fruit_7day_predictions.csv
+
+# View vegetable predictions
+cat 7_days_prediction/veg_7day_predictions.csv
 ```
 
-### 4. Launch Dashboard
+### **Method 2: Streamlit Dashboard (Interactive UI)**
 ```bash
 streamlit run dashboard.py
 ```
+Then open your browser at `http://localhost:8501`
 
-### 5. Launch REST API
+**Dashboard Features:**
+- 📊 View existing 7-day forecasts with interactive charts
+- 📤 Upload custom CSV files for new predictions
+- 💾 Download prediction results
+- 📈 Visual comparison of demand trends
+- 🎯 Filter by item, date range, and more
+
+### **Method 3: REST API (Programmatic Access)**
 ```bash
 python demand_api.py
-or
+# OR
 python3 demand_api.py
 ```
+API runs at `http://localhost:8000`
+
+**API Features:**
+- 🔌 Programmatic access to predictions via HTTP endpoints
+- 📤 Upload CSV files and get JSON responses
+- 🔗 Easy integration with other applications
+- 📡 RESTful design for scalability
+- 🧪 Test with curl, Postman, or Python requests
 
 ---
 
