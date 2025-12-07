@@ -67,8 +67,11 @@ VEGETBLE_DEMAND_FORECASTING/
 │
 ├── dashboard.py
 ├── demand_api.py
+├── readme.md
 ├── requirements.txt
-└── run_all.py
+├── run_all.py
+└── v_demand_prediction_module_demo_video.mp4
+
 ```
 
 ---
@@ -326,13 +329,8 @@ These files can be uploaded to the Streamlit dashboard or API.
 
 ## ▶️ Quick Start
 
-### 1. Clone the Repository
-```bash
-git clone <repository-url>
-cd VEGETBLE_DEMAND_FORECASTING
-```
 
-### 2. Create Virtual Environment
+### 1. Create Virtual Environment
 ```bash
 # Create virtual environment
 python -m venv venv
@@ -340,7 +338,7 @@ python -m venv venv
 python3 -m venv venv
 ```
 
-### 3. Activate Virtual Environment
+### 2. Activate Virtual Environment
 
 **On Windows:**
 ```bash
@@ -352,12 +350,12 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-### 4. Install Dependencies
+### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 5. Run Full Pipeline
+### 4. Run Full Pipeline
 ```bash
 python run_all.py
 # OR
