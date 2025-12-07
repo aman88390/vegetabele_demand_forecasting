@@ -1,0 +1,18 @@
+[
+  "price",
+  "is_event",
+  "is_weekend",
+  "day_of_week",
+  "month",
+  "item_Apple",
+  "item_Banana",
+  "item_Grapes",
+  "item_Mango",
+  "item_Orange",
+  "weather_Cloudy",
+  "weather_Rain",
+  "weather_Sunny",
+  "season_Rainy",
+  "season_Transition",
+  "season_Winter"
+]

@@ -1,0 +1,7 @@
+kind,item,model,mae,r2,n_train,n_test
+fruit,Apple,Final_Itemwise_LinearRegression,3.8541666666666665,0.5752609145431213,94,24
+fruit,Banana,Final_Itemwise_LinearRegression,6.807291666666667,0.438187830428343,95,24
+fruit,Grapes,Final_Itemwise_LinearRegression,6.358072916666667,0.09686879793055614,94,24
+fruit,Mango,Final_Itemwise_LinearRegression,3.6923828125,0.41449826283328195,93,24
+fruit,Orange,Final_Itemwise_LinearRegression,3.173828125,0.7394545703619186,93,24
+veg,,Final_Global_RandomForest,6.746040108318006,0.6558677269388041,928,233

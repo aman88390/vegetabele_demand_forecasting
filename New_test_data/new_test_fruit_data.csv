@@ -1,0 +1,16 @@
+date,item,price,weather,is_event,is_weekend
+2025-12-01,Apple,85,Sunny,No,0
+2025-12-01,Banana,27,Cloudy,No,0
+2025-12-01,Grapes,46,Sunny,No,0
+2025-12-01,Mango,63,Cloudy,No,0
+2025-12-01,Orange,136,Rain,No,0
+2025-12-02,Apple,127,Rain,No,0
+2025-12-02,Banana,148,Sunny,No,0
+2025-12-02,Grapes,73,Sunny,No,0
+2025-12-02,Mango,77,Rain,No,0
+2025-12-02,Orange,146,Sunny,No,0
+2025-12-03,Apple,39,Rain,No,0
+2025-12-03,Banana,63,Sunny,No,0
+2025-12-03,Grapes,116,Cloudy,No,0
+2025-12-03,Mango,112,Sunny,No,0
+2025-12-03,Orange,95,Sunny,No,0
