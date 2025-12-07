@@ -36,7 +36,9 @@ def generate_new_test_data(kind="fruit", days=7, output_path="new_test_data.csv"
         is_event = "Yes" if i in event_indices else "No"
 
         for item in items:
-            price = random.randint(20, 150)
+            if kind == "fruit":
+                price = random.randint(50, 150)
+            price = random.randint(20, 80)
             weather = random.choice(["Sunny", "Cloudy", "Rain"])
             month = date.month
 
