@@ -271,12 +271,12 @@ with tab2:
         try:
             df_input = pd.read_csv(uploaded_file)
             st.write("Preview of uploaded data:")
-            st.dataframe(df_input.head())
+            st.dataframe(df_input)
 
             df_pred = predict_with_best_model(kind2, df_input)
 
             st.success("Predictions generated!")
-            st.dataframe(df_pred.head())
+            st.dataframe(df_pred)
 
             # Visualizations
             if "date" in df_pred.columns:
