@@ -395,7 +395,7 @@ Then open your browser at `http://localhost:8501`
 - 📤 Upload custom CSV files for new predictions
 - 💾 Download prediction results
 - 📈 Visual comparison of demand trends
-- 🎯 Filter by item, date range, and more
+- 🎯 Filter by item
 
 ### **Method 3: REST API (Programmatic Access)**
 ```bash
