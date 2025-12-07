@@ -30,7 +30,7 @@ DATA_CONFIG = {
 }
 
 
-# ----------------- SHARED HELPERS (same as in API) -----------------
+# ----------------- SHARED HELPERS -----------------
 
 def normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
     rename_map = {
@@ -157,8 +157,11 @@ st.title("🥕 Street Vendor Demand Prediction Dashboard")
 tab1, tab2 = st.tabs(["📈 Existing 7-day Forecast", "📤 Predict from CSV"])
 
 
+# -------- TAB 1: EXISTING 7-DAY FORECAST --------
+
 with tab1:
     st.subheader("Existing 7-day Demand Forecast")
+
     kind = st.selectbox("Select dataset", ["fruit", "veg"])
 
     cfg = DATA_CONFIG[kind]
@@ -166,19 +169,94 @@ with tab1:
 
     if os.path.exists(pred_path):
         df_pred = pd.read_csv(pred_path)
+        df_pred = normalize_columns(df_pred)
+
+        # Try to detect date / prediction columns
+        if "date" in df_pred.columns:
+            df_pred["date"] = pd.to_datetime(df_pred["date"], errors="coerce")
+
         st.write(f"Showing file: `{pred_path}`")
-        st.dataframe(df_pred)
+        st.dataframe(df_pred.head())
 
-        if "date" in df_pred.columns and "pred_itemwise_linreg" in df_pred.columns:
-            st.line_chart(
-                df_pred.groupby("date")["pred_itemwise_linreg"].sum()
-                if "pred_itemwise_linreg" in df_pred.columns
-                else df_pred.groupby("date").iloc[:, -1].sum()
-            )
+        # ---- Decide which prediction column to use (best model per kind) ----
+        # Fruit → prefer item-wise LR col; Veg → prefer global RF col
+        if kind == "fruit":
+            # common names we may have
+            candidate_cols = [
+                "pred_itemwise_linreg",
+                "predicted_quantity_sold(in Kg)",
+                "predicted_quantity_sold",
+            ]
+        else:
+            candidate_cols = [
+                "pred_global_rf",
+                "predicted_quantity_sold(in Kg)",
+                "predicted_quantity_sold",
+            ]
+
+        # Auto-pick first that exists, else fall back to "any col starting with 'pred'"
+        pred_col = None
+        for c in candidate_cols:
+            if c in df_pred.columns:
+                pred_col = c
+                break
+
+        if pred_col is None:
+            # fallback: first column whose name starts with 'pred'
+            pred_candidates = [c for c in df_pred.columns if c.lower().startswith("pred")]
+            if pred_candidates:
+                pred_col = pred_candidates[0]
+
+        if pred_col is None:
+            st.warning("Could not detect a prediction column in existing CSV.")
+        else:
+            st.success(f"Using prediction column: **{pred_col}**")
+
+            # ---- Overall line chart (sum over all items) ----
+            if "date" in df_pred.columns:
+                st.markdown("### 📊 Overall Forecast (All Items)")
+                overall_series = (
+                    df_pred.groupby("date")[pred_col]
+                    .sum()
+                    .sort_index()
+                )
+                st.line_chart(overall_series)
+
+            # ---- Item-wise forecast ----
+            if "item" in df_pred.columns:
+                st.markdown("### 🧺 Item-wise Forecast")
+
+                items = sorted(df_pred["item"].unique().tolist())
+                selected_item = st.selectbox("Select item", items)
+
+                item_df = df_pred[df_pred["item"] == selected_item].copy()
+                if "date" in item_df.columns:
+                    item_series = (
+                        item_df.groupby("date")[pred_col]
+                        .sum()
+                        .sort_index()
+                    )
+                    st.line_chart(item_series)
+
+                # Top items across 7-day horizon
+                st.markdown("#### Top items over 7-day forecast horizon")
+                top_items = (
+                    df_pred.groupby("item")[pred_col]
+                    .sum()
+                    .sort_values(ascending=False)
+                    .head(10)
+                )
+                st.bar_chart(top_items)
+            else:
+                st.info("No 'item' column found in existing predictions, cannot show item-wise plots.")
     else:
-        st.warning(f"No existing prediction file found at `{pred_path}`. "
-                   f"Run your 7-day prediction script first.")
+        st.warning(
+            f"No existing prediction file found at `{pred_path}`. "
+            f"Run your 7-day prediction script first."
+        )
 
+
+# -------- TAB 2: UPLOAD CSV & PREDICT --------
 
 with tab2:
     st.subheader("Upload a CSV to Predict Demand")
@@ -200,6 +278,32 @@ with tab2:
             st.success("Predictions generated!")
             st.dataframe(df_pred.head())
 
+            # Visualizations
+            if "date" in df_pred.columns:
+                df_pred["date"] = pd.to_datetime(df_pred["date"], errors="coerce")
+
+            if "predicted_quantity_sold(in Kg)" in df_pred.columns and "date" in df_pred.columns:
+                st.markdown("### 📊 Overall Predicted Demand (All Items)")
+                overall_uploaded = (
+                    df_pred.groupby("date")["predicted_quantity_sold(in Kg)"]
+                    .sum()
+                    .sort_index()
+                )
+                st.line_chart(overall_uploaded)
+
+            if "item" in df_pred.columns and "predicted_quantity_sold(in Kg)" in df_pred.columns:
+                st.markdown("### 🧺 Item-wise Predicted Demand (Last Date)")
+                latest_date = df_pred["date"].max()
+                latest_df = df_pred[df_pred["date"] == latest_date]
+                by_item_latest = (
+                    latest_df.groupby("item")["predicted_quantity_sold(in Kg)"]
+                    .sum()
+                    .sort_values(ascending=False)
+                )
+                st.caption(f"Predicted demand on last date in file: {latest_date.date()}")
+                st.bar_chart(by_item_latest)
+
+            # Download predictions
             csv_bytes = df_pred.to_csv(index=False).encode("utf-8")
             st.download_button(
                 label="Download predictions as CSV",
