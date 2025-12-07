@@ -176,7 +176,7 @@ with tab1:
             df_pred["date"] = pd.to_datetime(df_pred["date"], errors="coerce")
 
         st.write(f"Showing file: `{pred_path}`")
-        st.dataframe(df_pred.head())
+        st.dataframe(df_pred)
 
         # ---- Decide which prediction column to use (best model per kind) ----
         # Fruit → prefer item-wise LR col; Veg → prefer global RF col

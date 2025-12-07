@@ -13,7 +13,7 @@ def month_to_season(m):
         return "Transition"
 
 
-def generate_new_test_data(kind="fruit", days=3, output_path="new_test_data.csv"):
+def generate_new_test_data(kind="fruit", days=7, output_path="new_test_data.csv"):
     if kind == "fruit":
         items = ["Apple", "Banana", "Grapes", "Mango", "Orange"]
     else:
@@ -21,12 +21,22 @@ def generate_new_test_data(kind="fruit", days=3, output_path="new_test_data.csv"
                  "Brinjal", "Cauliflower", "Capsicum", "LadyFinger", "GreenChilli"]
 
     today = datetime(2025, 12, 1)  # fixed date for reproducibility
+
+    # --------------------------
+    # ADD 2 RANDOM EVENT DAYS
+    # --------------------------
+    event_indices = random.sample(range(days), 2)  # choose 2 unique event days
+
     rows = []
 
     for i in range(days):
         date = today + timedelta(days=i)
+
+        # Mark event if this index is selected
+        is_event = "Yes" if i in event_indices else "No"
+
         for item in items:
-            price = random.randint(20, 150)  # random price
+            price = random.randint(20, 150)
             weather = random.choice(["Sunny", "Cloudy", "Rain"])
             month = date.month
 
@@ -35,7 +45,7 @@ def generate_new_test_data(kind="fruit", days=3, output_path="new_test_data.csv"
                 "item": item,
                 "price": price,
                 "weather": weather,
-                "is_event": "No",
+                "is_event": is_event,               # <-- EVENT FLAG
                 "is_weekend": 1 if date.weekday() >= 5 else 0,
             })
 
@@ -46,8 +56,5 @@ def generate_new_test_data(kind="fruit", days=3, output_path="new_test_data.csv"
 
 
 if __name__ == "__main__":
-    # generate fruit test file
-    generate_new_test_data(kind="fruit", days=3, output_path="new_test_fruit_data.csv")
-
-    # generate vegetable test file
-    generate_new_test_data(kind="veg", days=3, output_path="new_test_veg_data.csv")
+    generate_new_test_data(kind="fruit", days=7, output_path="new_test_fruit_data.csv")
+    generate_new_test_data(kind="veg", days=7, output_path="new_test_veg_data.csv")
