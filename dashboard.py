@@ -141,7 +141,7 @@ def predict_with_best_model(kind: str, df: pd.DataFrame) -> pd.DataFrame:
         rf_model = joblib.load(cfg["rf_model_path"])
         preds = rf_model.predict(X_new)
 
-    df["predicted_quantity_sold"] = (
+    df["predicted_quantity_sold(in Kg)"] = (
         np.clip(preds, a_min=0, a_max=None)
         .round(0)
         .astype(int)

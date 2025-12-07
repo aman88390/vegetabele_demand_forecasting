@@ -1,4 +1,4 @@
-date,item,price,is_event,is_weekend,day_of_week,month,weather,season,baseline_moving_avg,predicted_quantity
+date,item,price,is_event,is_weekend,day_of_week,month,weather,season,baseline_moving_avg,predicted_quantity(in Kg)
 2025-12-01,Brinjal,40,0,0,0,12,Sunny,Winter,17,22
 2025-12-01,Cabbage,28,0,0,0,12,Sunny,Winter,16,18
 2025-12-01,Capsicum,57,0,0,0,12,Sunny,Winter,15,14

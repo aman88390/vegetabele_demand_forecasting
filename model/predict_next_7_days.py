@@ -245,18 +245,18 @@ def predict_for_kind(kind: str, cfg: dict, horizon_days: int = 7):
                 pred_val = model.predict(x_row)[0]
                 preds.append(pred_val)
 
-        future_raw["predicted_quantity"] = preds
+        future_raw["predicted_quantity(in Kg)"] = preds
 
     elif final_model_type == "global_rf":
         rf_model = joblib.load(final_model_path)
         preds = rf_model.predict(X_future)
-        future_raw["predicted_quantity"] = preds
+        future_raw["predicted_quantity(in Kg)"] = preds
 
     else:
         raise ValueError(f"Unknown final_model_type: {final_model_type}")
 
     # 6. Clip + round (no negative demand)
-    for col in ["baseline_moving_avg", "predicted_quantity"]:
+    for col in ["baseline_moving_avg", "predicted_quantity(in Kg)"]:
         future_raw[col] = np.clip(future_raw[col], a_min=0, a_max=None)
         future_raw[col] = future_raw[col].round(0).astype(int)
 

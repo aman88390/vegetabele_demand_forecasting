@@ -1,4 +1,4 @@
-date,item,price,is_event,is_weekend,day_of_week,month,weather,season,baseline_moving_avg,predicted_quantity
+date,item,price,is_event,is_weekend,day_of_week,month,weather,season,baseline_moving_avg,predicted_quantity(in Kg)
 2025-12-01,Apple,139,0,0,0,12,Sunny,Winter,23,14
 2025-12-01,Banana,38,0,0,0,12,Sunny,Winter,33,34
 2025-12-01,Mango,102,0,0,0,12,Sunny,Winter,21,14
